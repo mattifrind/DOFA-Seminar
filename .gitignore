@@ -165,3 +165,11 @@ cython_debug/
 
 data/bigearthnet/*
 data/preprocessed-bigearthnet.pth
+
+# latex files
+*.aux
+*.bbl
+*.blg
+*.fls
+*.log
+*.out
