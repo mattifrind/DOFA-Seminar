@@ -139,7 +139,7 @@
 \newcommand\AtTextLowerLeft[1]{\AtTextUpperLeft{%
   \put(0,\LenToUnit{-\textheight}){#1}}}
 \newcommand\AtTextCenter[1]{\AtTextUpperLeft{%
-  \put(\LenToUnit{.5\textwidth},\LenToUnit{-.5\textheight}){#1}}}
+  \put(\LenToUnit{.5\columnwidth},\LenToUnit{-.5\textheight}){#1}}}
 \newcommand{\ESO@HookI}{} \newcommand{\ESO@HookII}{}
 \newcommand{\ESO@HookIII}{}
 \newcommand{\AddToShipoutPicture}{%
@@ -359,7 +359,7 @@
 
 % set dimensions of columns, gap between columns, and paragraph indent
 \setlength{\textheight}{8.875in}
-\setlength{\textwidth}{6.875in}
+\setlength{\columnwidth}{6.875in}
 \setlength{\columnsep}{0.3125in}
 \setlength{\topmargin}{0in}
 \setlength{\headheight}{0in}
@@ -552,10 +552,10 @@
     \def\pid{\parbox{1in}{\begin{center}\bf\sf{\small \confName}\\\#\paperID\end{center}}}
     \AtTextUpperLeft{%paperID in corners
       \put(\LenToUnit{-65pt},\LenToUnit{45pt}){\pid}
-      \put(\LenToUnit{\textwidth\kern-8pt},\LenToUnit{45pt}){\pid}
+      \put(\LenToUnit{\columnwidth\kern-8pt},\LenToUnit{45pt}){\pid}
     }
     \AtTextUpperLeft{%confidential
-      \put(0,\LenToUnit{1cm}){\parbox{\textwidth}{\centering\cvprtenhv
+      \put(0,\LenToUnit{1cm}){\parbox{\columnwidth}{\centering\cvprtenhv
       \confName~\confYear~Submission \#\paperID. CONFIDENTIAL REVIEW COPY.  DO NOT DISTRIBUTE.}}
     }
   }

@@ -1,15 +1,15 @@
 \section{Introduction}
 \label{sec:intro}
 
-The success of computer vision deep learning models relies heavily on the large amount of data available for training on the internet. \cite{Authors14} % (https://ieeexplore.ieee.org/document/8237359)
-In the domain of remote sensing though, labeled data is hard to obtain because labeling is a complicated task (requires expert knowledge) and there is a much larger range of sensors. % DOFA paper
-There are multiple ways to address this issue like synthetic data or semi-supervised learning algorithms. After the breakthroughs of LLM and the concept of pretraining foundation models on a wide range of tasks, recent research tried to transfer this concept in the area of remote sensing computer vision. % source: “On the Opportunities and Risks of Foundation Models”, Bommasani et al. 
+The success of computer vision deep learning models relies heavily on the large amount of data available for training on the internet \cite{8237359}.
+In the domain of remote sensing though, labeled data is hard to obtain because labeling is a complicated task (requires expert knowledge) and there is a much larger range of sensors \cite{dofa}.
+There are multiple ways to address this issue like synthetic data or semi-supervised learning algorithms. After the breakthroughs of LLMs and the concept of pretraining foundation models on a wide range of tasks, recent research tried to transfer this concept in the area of remote sensing computer vision \cite{bommasani2022opportunitiesrisksfoundationmodels}.
 
-This report focuses on one foundation model called "DOFA" % DOFA
-and evaluates it on a new downstream task for comparison with other foundation models. The used dataset is called BigEarthNet % https://arxiv.org/abs/2407.03653
+This report focuses on one foundational model called "DOFA" \cite{dofa}
+and evaluates it on a new downstream task for comparison with other foundation models. The used dataset is called BigEarthNet \cite{bigearthnet}
 and we will be using the Sentinel-1 data. We will provide results with different metrics on the multi-label classification for the 19-class variant and also the 43-class variant.
 
-We will analyze the meaningfulness of the features computed by the DOFA model by applying a UMAP transformation. % https://arxiv.org/abs/1802.03426
+We will analyze the meaningfulness of the features computed by the DOFA model by applying a UMAP transformation \cite{umap-paper}
 to understand the meaningfulness of the features. Afterward, we use the features as input data for training different classifiers on the classification task.
 
-// TODO: example images
+% TODO: example images
