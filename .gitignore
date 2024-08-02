@@ -173,3 +173,6 @@ data/preprocessed-bigearthnet.pth
 *.fls
 *.log
 *.out
+*.brf
+*.fdb_latexmk
+main.synctex.gz
