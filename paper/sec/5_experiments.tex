@@ -2,11 +2,11 @@
 
 \subsection{Data}
 
-We're using the \textit{BigEarthNet dataset} \cite{bigearthnet} for our evaluations. The goal is to use the model as a feature generator and use these features for solving the multi-label classification problem with 19 classes and also 43 classes from BigEarthNet. This dataset contains around 550,000 image patches from Sentinel-I and Sentinel-II with multi-class labels for every image. We are going to use the \textit{Sentinel-I} images for our experiments.
+We're using the \textit{BigEarthNet dataset} \cite{bigearthnet} for our evaluations. The goal is to use the model as a feature generator and leverage these features to solve the multilabel classification problem for both 19 and 43 classes from BigEarthNet. This dataset contains around 550,000 image patches from Sentinel-I and Sentinel-II, each labeled with multiple classes. We are going to use the \textit{Sentinel-I} images for our experiments.
 
-The data is split into train and test set based on the implementation from the \href{https://torchgeo.readthedocs.io/en/latest/api/datasets.html#bigearthnet}{torchgeo repository}. The train dataset contains around 270,000 and the test dataset has 125,000 images.
+The data is split into train and test sets based on the implementation from the \href{https://torchgeo.readthedocs.io/en/latest/api/datasets.html#bigearthnet}{torchgeo repository}. The train dataset contains around 270,000 and the test dataset has 125,000 images.
 
-There are high differences in the occurrence of certain classes in the dataset (see Fig. \ref{fig:class-distribution}). There are, for example, only a few images with wetlands, beaches, and moors. The metrics during the evaluation have to account for this.
+There are significant differences in the occurrence of certain classes in the dataset (see Fig. \ref{fig:class-distribution}). There are, for example, only a few images with wetlands, beaches, and moors. The metrics during the evaluation must account for this.
 
 \begin{figure}[h]
   \centering
@@ -18,19 +18,19 @@ There are high differences in the occurrence of certain classes in the dataset (
 \begin{figure}[h]
   \centering
   \includegraphics[width=\columnwidth]{images/correlation.png}
-  \caption{Correlation of classes in the train dataset}
+  \caption{Correlation of classes in the train dataset (19 classes) - We see low correlation between most of the classes. There are some exceptions, e.g. Marine waters are negatively correlated with most of the other classes. We can expect higher performance for that class.}
   \label{fig:correlation}
 \end{figure}
 
-We analyzed the correlation between classes of BigEarthNet and the results are displayed in Fig. \ref{fig:correlation}. The classes are mostly uncorrelated with some exceptions like the high likelihood that coniferous forests are usually also mixed forests and marine waters are mostly not in the same images as all the other vegetation forms.
+We analyzed the correlation between classes of BigEarthNet and the results are displayed in Fig. \ref{fig:correlation}. The classes are mostly uncorrelated, with some exceptions, such as the high likelihood that coniferous forests are also mixed forests, and that marine waters are usually not present in the same images as other vegetation forms. Due to that analysis, we can expect higher classification performance for marine waters as there are mostly no other classes in the same image.
 
 \subsection{Performance Metrics}
 
-We decided to compute multiple metrics for evaluating the performance of the models in the classification tasks. We provide results for \textit{f2-micro, f2-macro} (\href{https://scikit-learn.org/stable/modules/generated/sklearn.metrics.fbeta_score.html}{Implementation}), \textit{hamming-loss}, and \textit{precision} scores (\href{https://scikit-learn.org/stable/modules/generated/sklearn.metrics.precision_score.html}{Implementation}). We also calculate precision and f1 scores for individual classes.
+We chose to compute multiple metrics for evaluating the performance of the models in the classification tasks. We provide results for \textit{f2-micro, f2-macro} (\href{https://scikit-learn.org/stable/modules/generated/sklearn.metrics.fbeta_score.html}{Implementation}), \textit{hamming-loss}, and \textit{precision} scores (\href{https://scikit-learn.org/stable/modules/generated/sklearn.metrics.precision_score.html}{Implementation}). We also calculate precision and f1 scores for individual classes.
 
 \subsection{Results}
 
-First, we calculated feature vectors using DOFA for all the images in BigEarthNet (Sentinel-I) and saved them for further use. All the following analyses use these vectors for visualizations or the downstream classification task.
+First, we calculated feature vectors using DOFA for all the images in BigEarthNet (Sentinel-I) and saved them for further use. All the following analyses use these vectors for visualizations or the downstream classification task. The distribution parameters for the Sentinel I data (wavelengths with their standard deviations) were provided by the authors of the DOFA paper and were being used for the computation of the features \cite{dofa}. 
 
 \subsubsection{UMAP Feature analysis}
 
@@ -41,13 +41,13 @@ First, we calculated feature vectors using DOFA for all the images in BigEarthNe
   \label{fig:umap}
 \end{figure*}
 
-In Fig. \ref{fig:umap} are the occurrences of different classes in a UMAP transformed 2D space visualized. Because one image has multiple labels, we chose the visualization via multiple charts. In this visualization, we expect different classes to be located in different data cloud regions. As we can see, this assumption holds for a lot of the classes. Most notably, we have a separate region for all marine water images (right bottom chart). As we've seen in Fig. \ref{fig:correlation}, this class is negatively correlated with most of the other classes, so a separation in this visualization is plausible. It appears that arable land is more on the left side of the largest region, while forests, woodlands, etc. are more on the right side.
+The occurrences of different classes in a UMAP-transformed 2D space are visualized in Fig \ref{fig:umap}. Because one image has multiple labels, we chose to present the visualization using multiple charts. In this visualization, we expect different classes to be located in different data cloud regions. As we can see, this assumption holds for many of the classes. Most notably, we have a separate region for all marine water images (right-bottom chart). As we've seen in Fig. \ref{fig:correlation}, this class is negatively correlated with most of the other classes, so a separation in this visualization is plausible. It appears that arable land is more on the left side of the largest region, while forests and woodlands are more on the right side.
 
-With the results of this visualization, we expect that the feature vectors of DOFA capture the semantic meaning of the different images, and it should be possible to train a classifier on top of them.
+Based on this visualization, we expect that the feature vectors of DOFA capture the semantic meaning of the different images, making it possible to train a classifier using these vectors.
 
 \subsubsection{Classification}
 
-We used the feature vectors of DOFA to train different ML algorithms for the given classification task. All the approaches use the same data split. In Table \ref{fig:test-results} are the final results of these experiments.
+We used the feature vectors of DOFA to train different ML algorithms for the given classification task. All the approaches use the same data split. The final results of these experiments are presented in Table \ref{fig:test-results}. The random forest classifier used 20 estimators. The MLP consisted of 4 linear layers (768$\rightarrow$384,384$\rightarrow$192,192$\rightarrow$100,100$\rightarrow$19) and ReLU layers in between. The MLP was trained using the BCE loss and the Adam optimizer.
 
 \begin{table*}[h]
   \centering
@@ -62,15 +62,15 @@ We used the feature vectors of DOFA to train different ML algorithms for the giv
   \label{fig:test-results}
 \end{table*}
 
-There are notable differences in the performance of the chosen approaches. MLP has the best performance over most of the metrics. However, the random forest classifier and linear probing also have similar scores in $P_{micro}$ and $P_{macro}$. All classifiers have significant differences between their micro and macro averaged $F^2$ scores. When we compare the $F^2$ scores per class, we can see the cause for these values (Fig. \ref{fig:scores-by-class}): There is a high variance in the performance across classes, which ranges from 0\% $F^2$ score to about 90\% $F^2$ score. This leads to the different averaging variants resulting in different scores. We can also see that MLP manages to achieve higher scores than the linear classifier over more classes. Additionally, the low performing classes are mostly similar and correlate to the classes with low-data availability. It seems that the labels were not enough to learn all of the classes well.
+There are notable differences in the performance of the chosen approaches. MLP has the best performance over most of the metrics. However, the random forest classifier and linear probing also have similar scores in $P_{micro}$ and $P_{macro}$. All classifiers have significant differences between their micro and macro averaged $F^2$ scores. When we compare the $F^2$ scores per class, we can see the cause for these values (Fig. \ref{fig:scores-by-class}): There is a high variance in the performance across classes, which ranges from 0\% $F^2$ score to about 90\% $F^2$ score. This leads to the different averaging variants resulting in different scores. We can also see that MLP manages to achieve higher scores than the linear classifier over more classes. Additionally, the low performing classes are mostly similar and correlate to the classes with low-data availability. It seems that the labels were not sufficient to learn all of the classes well.
 
 \begin{figure}[h]
   \centering
-  \begin{minipage}[b]{0.48\columnwidth}
+  \begin{minipage}[b]{0.49\columnwidth}
     \centering
     \includegraphics[width=\columnwidth]{images/Linear Probing - f2 scores.png}
   \end{minipage}
-  \begin{minipage}[b]{0.48\columnwidth}
+  \begin{minipage}[b]{0.49\columnwidth}
     \centering
     \includegraphics[width=\columnwidth]{images/MLP - f2 scores.png}
   \end{minipage}
@@ -78,7 +78,7 @@ There are notable differences in the performance of the chosen approaches. MLP h
   \label{fig:scores-by-class}
 \end{figure}
 
-We can conclude that the features generated by the DOFA model are not well linearly separable across all classes and only some achieve an $F^2$ score of over 50\%. The MLP model can separate more complex data and therefore reaches a better performance.
+We can conclude that the features generated by the DOFA model are not easily linearly separable across all classes, with only some achieving an $F^2$ score of over 50\%. The MLP model can separate more complex data and therefore reaches a better performance.
 
 Random forest classifiers can separate high dimensional data, but in this case, as seen in Table \ref{fig:test-results}, their scores are on the same level as the linear classifier. % WHY????
 
@@ -97,7 +97,7 @@ Random forest classifiers can separate high dimensional data, but in this case, 
   \label{fig:test-results-43}
 \end{table*}
 
-In Table \ref{fig:test-results-43} we provide test results for the multi-label classification task with 43 classes of BigEarthNet \cite{bigearthnet}. The results are expected worse than on the 19-class variant, as this is a more complex task. We can see that the DOFA model isn't able to keep up with a specialized model, e.g. \cite{bigearthnet-comparison-model} even though this comparison has its limitations as this paper used the Sentinel-II images.
+In Table \ref{fig:test-results-43}, we provide test results for the multi-label classification task with 43 classes of BigEarthNet \cite{bigearthnet}. The results are expected to be worse than on the 19-class variant, as this is a more complex task. We can see that the DOFA model isn't able to keep up with a specialized model, e.g. \cite{bigearthnet-comparison-model} even though this comparison has its limitations as this paper used the Sentinel-II images.
 
 \begin{figure}[h]
   \centering
@@ -106,4 +106,4 @@ In Table \ref{fig:test-results-43} we provide test results for the multi-label c
   \label{fig:confusion-matrix}
 \end{figure}
 
-In Fig. \ref{fig:confusion-matrix}, we see the confusion matrices of the best model over the 19 classes. With 19 classes, it is sensible that most of the classes are quite uncommon, which results in a lot of true negatives. It is interesting to see that most of the errors come from false negatives, which means that the model is unable to detect certain classes in an image.
+In Fig. \ref{fig:confusion-matrix}, we see the confusion matrices of the best model over the 19 classes. With 19 classes, it is expected that most of the classes are quite uncommon, which results in many true negatives. Interestingly, most of the errors are false negatives, indicating that the model fails to detect certain classes in an image.

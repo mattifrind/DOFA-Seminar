@@ -12,16 +12,16 @@
 %→ Focus on main papers.
 
 
-Self-supervised learning has been used for some years to accomplish different tasks in remote sensing and can also be used to train larger multi-modal foundational models \cite{dofa, satmae, croma}.
-In principle, there are two ways to generate meaningful features. The first is to use contrastive learning \cite{chen2020simpleframeworkcontrastivelearning}, where two views of the same image should be close in feature space and two views of different images far away from each other. These two views can be simple image transformations or, for example, the same area of the earth from another sensor.
-There are many examples with different strategies for this contrastive learning approach \cite{satmae, ayush2022geographyawareselfsupervisedlearning, manas2021seasonalcontrastunsupervisedpretraining}.
+Self-supervised learning has been used for several years to accomplish different tasks in remote sensing and is also applicable for training larger multi-modal foundational models \cite{dofa, satmae, croma}.
+There are two primary methods to generate meaningful features. The first method is to use contrastive learning \cite{chen2020simpleframeworkcontrastivelearning}, where two views of the same image should be close together in feature space, while two views of different images should be far apart from each other. These two views can be simple image transformations or, for example, the same area of the earth captured by a different sensor.
+There are many examples with different strategies for this contrastive learning approach \cite{satmae, ayush2022geographyawareselfsupervisedlearning}.
 Research has shown that this approach tends to produce models that ignore information in the data that is not shared between the augmented views, regardless of whether this information would be useful in later downstream tasks \cite{tian2020makesgoodviewscontrastive}.
-Because of this, it is key to select an appropriate augmentation strategy as this decision heavily affects the performance of the model \cite{neumann2019indomainrepresentationlearningremote}.
+Because of this, it is crucial to select an appropriate augmentation strategy as this decision heavily affects the performance of the model \cite{neumann2019indomainrepresentationlearningremote}.
 
 The alternative to contrastive learning is learning to reconstruct images. An example of this approach is SimMIM \cite{xie2022simmimsimpleframeworkmasked}.
-It is possible to easily scale these models as they don't rely on image pairs \cite{he2021maskedautoencodersscalablevision},
-but they might need more fine-tuning to become useful for downstream tasks \cite{lehner2023contrastivetuninglittlehelp}.
+These models can be easily scaled as they don’t rely on image pairs \cite{he2021maskedautoencodersscalablevision},
+but they require additional fine-tuning to become useful for downstream tasks \cite{lehner2023contrastivetuninglittlehelp}.
 
-Most earlier foundational models were trained on a single sensor type. For example, Scale-MAE \cite{scalemae} is for optical data, SatMAE \cite{satmae} for Sentinel-2 data, and so on. Even if these models can be used for various downstream tasks in their specific sensor domain, they can't generalize across these domains. According to DOFA, this results in multiple limitations. Models can't use most of the unlabeled data during training because it is from a different sensor type. They also lack universatility when the downstream task differs from the original data as needed channels and bandwidths change based on the used sensor. Overcoming these limitations and exploiting the usage of data from various sensors is the main goal of DOFA \cite{dofa}.
+Most previous foundational models were trained on a single sensor type. For example, Scale-MAE \cite{scalemae} is for optical data, SatMAE \cite{satmae} for Sentinel-2 data, and so on. Although these models can be used for various downstream tasks in their specific sensor domain, they can't generalize across these domains. According to DOFA, this leads to several limitations. Models are unable to utilize most of the unlabeled data during training because it is from a different sensor type. They also lack universality when the downstream task differs from the original data as needed channels and bandwidths change based on the used sensor. Overcoming these limitations and leveraging data from various sensors is the main goal of DOFA \cite{dofa}.
 
-There is different research that tries to solve this issue of multi-modality like \cite{croma, tseng2024lightweightpretrainedtransformersremote, hackstein2024exploringmaskedautoencoderssensoragnostic}.
+Various studies have attempted to address the issue of multi-modality, such as \cite{croma, tseng2024lightweightpretrainedtransformersremote, hackstein2024exploringmaskedautoencoderssensoragnostic}.
