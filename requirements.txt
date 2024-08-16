@@ -121,7 +121,7 @@ torch==2.3.0
 torchgeo==0.5.2
 torchmetrics==1.4.0.post0
 torchvision==0.18.0
-tornado==6.4
+tornado==6.4.1
 tqdm==4.66.4
 traitlets==5.14.3
 typeshed_client==2.5.1
