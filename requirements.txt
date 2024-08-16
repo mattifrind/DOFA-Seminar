@@ -104,7 +104,7 @@ requests==2.31.0
 rich==13.7.1
 Rtree==1.2.0
 safetensors==0.4.3
-scikit-learn==1.4.2
+scikit-learn==1.5.0
 scipy==1.13.0
 segmentation-models-pytorch==0.3.3
 setuptools==69.5.1
