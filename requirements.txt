@@ -50,7 +50,7 @@ kiwisolver==1.4.5
 kornia==0.7.0
 lightly==1.5.4
 lightly-utils==0.0.2
-lightning==2.2.5
+lightning==2.3.3
 lightning-utilities==0.11.2
 linkify-it-py==2.0.3
 llvmlite==0.42.0
